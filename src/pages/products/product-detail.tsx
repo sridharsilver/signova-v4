@@ -68,7 +68,7 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="bg-background min-h-[calc(100vh-80px)] flex flex-col pt-24 sm:pt-28 lg:pt-32">
+    <div className="bg-background min-h-[calc(100vh-80px)] flex flex-col pt-24 xl:pt-32">
       {/* Enhanced Breadcrumbs */}
       <div className="max-w-7xl mx-auto w-full px-6 pt-4 pb-4">
         <Breadcrumb>
@@ -104,11 +104,11 @@ export default function ProductDetailPage() {
 
       <div className="flex-1 flex flex-col justify-center pb-10">
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-4">
-        <div className="bg-card rounded-3xl sm:rounded-[2.5rem] shadow-card overflow-hidden grid md:grid-cols-2 lg:gap-8 border border-border/50">
+        <div className="bg-card rounded-3xl sm:rounded-[2.5rem] shadow-card overflow-hidden grid lg:grid-cols-2 lg:gap-4 xl:gap-8 border border-border/50">
           {/* Enhanced Image Section */}
-          <div className="bg-gradient-to-br from-secondary to-background grid place-items-center p-8 md:p-12 lg:p-20 relative min-h-[250px] sm:min-h-[300px] md:min-h-[500px] lg:min-h-[600px] group">
+          <div className="bg-gradient-to-br from-secondary to-background grid place-items-center p-8 md:p-12 lg:p-10 xl:p-16 relative min-h-[250px] sm:min-h-[300px] lg:min-h-[400px] xl:min-h-[500px] group">
             <div className="absolute inset-0 bg-lime-gradient opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none mix-blend-multiply" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 sm:size-64 md:size-80 bg-lime-gradient/20 blur-[80px] sm:blur-[100px] md:blur-[120px] rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 sm:size-64 lg:size-72 bg-lime-gradient/20 blur-[80px] sm:blur-[100px] rounded-full" />
             
             {product.image ? (
               <motion.img
@@ -117,7 +117,7 @@ export default function ProductDetailPage() {
                 transition={{ duration: 0.5, type: "spring", bounce: 0.4 }}
                 src={product.image}
                 alt={product.name}
-                className="relative max-h-56 sm:max-h-72 md:max-h-[28rem] lg:max-h-[32rem] w-auto object-contain z-10 group-hover:scale-105 transition-transform duration-700"
+                className="relative max-h-48 sm:max-h-64 lg:max-h-[22rem] xl:max-h-[28rem] w-auto object-contain z-10 group-hover:scale-105 transition-transform duration-700"
               />
             ) : (
               <div className="size-32 sm:size-40 rounded-2xl sm:rounded-3xl bg-lime-gradient grid place-items-center relative z-10 shadow-glow">
@@ -127,10 +127,10 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Details Section */}
-          <div className="p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-center relative">
+          <div className="p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-center relative">
             <div className="absolute -top-40 -right-40 size-[300px] sm:size-[500px] rounded-full bg-lime-gradient opacity-5 blur-2xl sm:blur-3xl pointer-events-none" />
             
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
               {product.tag && (
                 <div className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-wider font-bold bg-lime-gradient text-charcoal shadow-sm">
                   {product.tag}
@@ -199,6 +199,41 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Next / Previous Navigation */}
+        {(prevProduct || nextProduct) && (
+          <div className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+            {prevProduct ? (
+              <Link
+                to={`/products/${prevProduct.slug}`}
+                className="group flex items-center gap-4 p-4 pr-6 rounded-2xl hover:bg-secondary/50 transition-colors w-full sm:w-auto"
+              >
+                <div className="size-12 rounded-full bg-secondary border border-border grid place-items-center shrink-0 group-hover:border-leaf transition-colors">
+                  <ArrowLeft className="size-5 text-muted-foreground group-hover:text-leaf transition-colors" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Previous</div>
+                  <div className="font-display font-semibold text-foreground group-hover:text-leaf transition-colors">{prevProduct.name}</div>
+                </div>
+              </Link>
+            ) : <div className="hidden sm:block flex-1" />}
+
+            {nextProduct && (
+              <Link
+                to={`/products/${nextProduct.slug}`}
+                className="group flex items-center justify-end gap-4 p-4 pl-6 rounded-2xl hover:bg-secondary/50 transition-colors text-right w-full sm:w-auto ml-auto"
+              >
+                <div>
+                  <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Next</div>
+                  <div className="font-display font-semibold text-foreground group-hover:text-leaf transition-colors">{nextProduct.name}</div>
+                </div>
+                <div className="size-12 rounded-full bg-secondary border border-border grid place-items-center shrink-0 group-hover:border-leaf transition-colors">
+                  <ArrowLeft className="size-5 rotate-180 text-muted-foreground group-hover:text-leaf transition-colors" />
+                </div>
+              </Link>
+            )}
+          </div>
+        )}
 
         {/* Admin QR Feature */}
         {isAdmin && (
@@ -379,42 +414,6 @@ export default function ProductDetailPage() {
             )}
           </div>
         )}
-
-        {/* Next / Previous Navigation */}
-        {(prevProduct || nextProduct) && (
-          <div className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-            {prevProduct ? (
-              <Link
-                to={`/products/${prevProduct.slug}`}
-                className="group flex items-center gap-4 p-4 pr-6 rounded-2xl hover:bg-secondary/50 transition-colors w-full sm:w-auto"
-              >
-                <div className="size-12 rounded-full bg-secondary border border-border grid place-items-center shrink-0 group-hover:border-leaf transition-colors">
-                  <ArrowLeft className="size-5 text-muted-foreground group-hover:text-leaf transition-colors" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Previous</div>
-                  <div className="font-display font-semibold text-foreground group-hover:text-leaf transition-colors">{prevProduct.name}</div>
-                </div>
-              </Link>
-            ) : <div className="hidden sm:block flex-1" />}
-
-            {nextProduct && (
-              <Link
-                to={`/products/${nextProduct.slug}`}
-                className="group flex items-center justify-end gap-4 p-4 pl-6 rounded-2xl hover:bg-secondary/50 transition-colors text-right w-full sm:w-auto ml-auto"
-              >
-                <div>
-                  <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Next</div>
-                  <div className="font-display font-semibold text-foreground group-hover:text-leaf transition-colors">{nextProduct.name}</div>
-                </div>
-                <div className="size-12 rounded-full bg-secondary border border-border grid place-items-center shrink-0 group-hover:border-leaf transition-colors">
-                  <ArrowLeft className="size-5 rotate-180 text-muted-foreground group-hover:text-leaf transition-colors" />
-                </div>
-              </Link>
-            )}
-          </div>
-        )}
-
       </div>
       </div>
     </div>

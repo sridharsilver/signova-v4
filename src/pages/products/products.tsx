@@ -50,12 +50,12 @@ export default function ProductsPage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-10">
+          <div className="flex overflow-x-auto md:flex-wrap gap-2 md:gap-3 mb-8 md:mb-10 pb-2 md:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {productCategories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition ${
+                className={`inline-flex shrink-0 items-center whitespace-nowrap gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition ${
                   activeCategory === category.id
                     ? "bg-primary text-primary-foreground shadow-card"
                     : "bg-card border border-border hover:border-leaf text-card-foreground"

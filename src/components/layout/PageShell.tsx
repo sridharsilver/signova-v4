@@ -42,7 +42,7 @@ export function PageHero({
       <div className="absolute inset-0 grid-pattern opacity-50" />
       <div className="absolute -top-40 -left-20 size-[500px] rounded-full bg-lime-gradient opacity-20 blur-3xl" />
       <div className="absolute bottom-0 right-0 size-[400px] rounded-full bg-lime opacity-10 blur-3xl" />
-      <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-16 md:pt-48 md:pb-28">
+      <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-16 md:pt-36 md:pb-20 xl:pt-48 xl:pb-28">
         {eyebrow && (
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-dark text-xs uppercase tracking-[0.2em] text-lime mb-6 animate-fade-in">
             {eyebrow}
