@@ -308,8 +308,8 @@ export default function ProductDetailPage() {
                         if (!ctx) return;
                         ctx.fillStyle = "white";
                         ctx.fillRect(0, 0, 1000, 1000);
-                        // Draw image with a 100px white margin on all sides (800x800)
-                        ctx.drawImage(img, 100, 100, 800, 800);
+                        // Draw image with a 75px white margin on all sides (850x850)
+                        ctx.drawImage(img, 75, 75, 850, 850);
                         const pngUrl = canvas.toDataURL("image/png");
                         const a = document.createElement("a");
                         a.href = pngUrl;
@@ -396,8 +396,8 @@ export default function ProductDetailPage() {
                         if (!ctx) return;
                         ctx.fillStyle = "white";
                         ctx.fillRect(0, 0, 1000, 1000);
-                        // Draw image with a 100px white margin on all sides (800x800)
-                        ctx.drawImage(img, 100, 100, 800, 800);
+                        // Draw image with a 75px white margin on all sides (850x850)
+                        ctx.drawImage(img, 75, 75, 850, 850);
                         const pngUrl = canvas.toDataURL("image/png");
                         const a = document.createElement("a");
                         a.href = pngUrl;
