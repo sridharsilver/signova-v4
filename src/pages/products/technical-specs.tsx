@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { productsList } from "@/data/products";
+import logo from "@/assets/images/signova-logo.png";
 
 export default function TechnicalSpecsPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -30,12 +31,15 @@ export default function TechnicalSpecsPage() {
   const paragraphs = product.qrData.split("\n").filter((p) => p.trim() !== "");
 
   return (
-    <div className="min-h-[100dvh] bg-white p-4 sm:p-6 flex flex-col justify-center items-center">
-      <div className="w-full max-w-md mx-auto">
-        <h1 className="text-lg font-bold text-black mb-1 leading-tight">
+    <div className="min-h-[100dvh] bg-gray-50 p-4 sm:p-6 flex flex-col justify-center items-center">
+      <div className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-100">
+        <div className="flex justify-center mb-6">
+          <img src={logo} alt="Signova Group" className="h-8 object-contain" />
+        </div>
+        <h1 className="text-lg font-bold text-black mb-1 leading-tight text-center">
           {product.name}
         </h1>
-        <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-6 pb-2 border-b border-gray-200">
+        <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-6 pb-2 border-b border-gray-200 text-center">
           Technical Specifications
         </div>
 
