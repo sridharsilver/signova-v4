@@ -31,35 +31,35 @@ export default function TechnicalSpecsPage() {
   const paragraphs = product.qrData.split("\n").filter((p) => p.trim() !== "");
 
   return (
-    <div className="min-h-[100dvh] bg-gray-50 p-4 sm:p-6 flex flex-col justify-center items-center">
-      <div className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex justify-center mb-6">
-          <img src={logo} alt="Signova Group" className="h-8 object-contain" />
-        </div>
-        <h1 className="text-lg font-bold text-black mb-1 leading-tight text-center">
+    <div className="min-h-[100dvh] bg-green-50 p-4 sm:p-6 flex flex-col justify-center items-center">
+      <div className="flex justify-center mb-6 w-full max-w-md mx-auto">
+        <img src={logo} alt="Signova Group" className="h-10 object-contain" />
+      </div>
+      <div className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-lg shadow-gray-300/60 border border-gray-100 font-['Inter']">
+        <h1 className="text-2xl font-bold uppercase tracking-wider text-black mb-1 leading-tight text-center">
           {product.name}
         </h1>
         <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-6 pb-2 border-b border-gray-200 text-center">
           Technical Specifications
         </div>
 
-        <div className="space-y-0.5">
+        <div className="space-y-0.5 font-sans">
           {paragraphs.map((para, index) => {
             if (para.includes(":") && !para.startsWith("(")) {
               const [title, ...rest] = para.split(":");
               return (
                 <div key={index} className="mt-4 mb-2 first:mt-0">
-                  <h3 className="text-xs font-bold text-gray-900 mb-0.5">
+                  <h3 className="text-base font-bold text-gray-900 mb-0.5">
                     {title.trim()}
                   </h3>
-                  <p className="text-xs text-gray-700 leading-normal">
+                  <p className="text-sm text-gray-700 leading-normal">
                     {rest.join(":").trim()}
                   </p>
                 </div>
               );
             }
             return (
-              <p key={index} className="text-xs text-gray-700 leading-normal">
+              <p key={index} className="text-sm text-gray-700 leading-normal">
                 {para}
               </p>
             );
