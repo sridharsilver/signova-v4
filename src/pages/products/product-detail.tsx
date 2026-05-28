@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { ArrowLeft, Atom, Beaker, Package, Leaf, QrCode, Download } from "lucide-react";
+import { ArrowLeft, Atom, Beaker, Package, Leaf, QrCode, Download, Home } from "lucide-react";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { productsList, productCategories } from "@/data/products";
 import {
@@ -75,7 +75,9 @@ export default function ProductDetailPage() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link to="/">Home</Link>
+                <Link to="/" className="flex items-center" aria-label="Home">
+                  <Home className="size-4" />
+                </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -88,7 +90,15 @@ export default function ProductDetailPage() {
             {category && (
               <>
                 <BreadcrumbItem>
-                  <span className="text-muted-foreground">{category.name}</span>
+                  <BreadcrumbLink asChild>
+                    <Link
+                      to={`/products?category=${category.id}`}
+                      className="truncate max-w-[80px] sm:max-w-none inline-block align-bottom hover:text-foreground transition-colors"
+                      title={category.name}
+                    >
+                      {category.name}
+                    </Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
               </>
@@ -106,7 +116,7 @@ export default function ProductDetailPage() {
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-4">
         <div className="bg-card rounded-3xl sm:rounded-[2.5rem] shadow-card overflow-hidden grid lg:grid-cols-2 lg:gap-4 xl:gap-8 border border-border/50">
           {/* Enhanced Image Section */}
-          <div className="bg-gradient-to-br from-secondary to-background grid place-items-center p-8 md:p-12 lg:p-10 xl:p-16 relative min-h-[250px] sm:min-h-[300px] lg:min-h-[400px] xl:min-h-[500px] group">
+          <div className="bg-gradient-to-br from-secondary to-background relative min-h-[250px] sm:min-h-[300px] lg:min-h-[400px] xl:min-h-[500px] group overflow-hidden">
             <div className="absolute inset-0 bg-lime-gradient opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none mix-blend-multiply" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 sm:size-64 lg:size-72 bg-lime-gradient/20 blur-[80px] sm:blur-[100px] rounded-full" />
             
@@ -117,7 +127,7 @@ export default function ProductDetailPage() {
                 transition={{ duration: 0.5, type: "spring", bounce: 0.4 }}
                 src={product.image}
                 alt={product.name}
-                className="relative max-h-48 sm:max-h-64 lg:max-h-[22rem] xl:max-h-[28rem] w-auto object-contain z-10 group-hover:scale-105 transition-transform duration-700"
+                className="absolute inset-0 w-full h-full object-contain p-4 sm:p-8 z-10 group-hover:scale-105 transition-transform duration-700"
               />
             ) : (
               <div className="size-32 sm:size-40 rounded-2xl sm:rounded-3xl bg-lime-gradient grid place-items-center relative z-10 shadow-glow">
@@ -144,11 +154,11 @@ export default function ProductDetailPage() {
               )}
             </div>
             
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6 tracking-tight">
+            <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-6 tracking-tight">
               {product.name}
             </h1>
             
-            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-6 sm:mb-8 line-clamp-3 sm:line-clamp-none">
+            <p className="text-sm sm:text-lg lg:text-xl text-muted-foreground leading-relaxed mb-6 sm:mb-8 line-clamp-3 sm:line-clamp-none">
               {product.desc}
             </p>
 
@@ -156,11 +166,11 @@ export default function ProductDetailPage() {
             <div className="space-y-8">
               {product.uses && (
                 <div>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-leaf mb-2">
-                    <Leaf className="size-5" />
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-leaf mb-2">
+                    <Leaf className="size-4 sm:size-5" />
                     Benefits & Uses
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                     {product.uses}
                   </p>
                 </div>
@@ -168,11 +178,11 @@ export default function ProductDetailPage() {
 
               {product.dosage && (
                 <div>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-leaf mb-2">
-                    <Beaker className="size-5" />
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-leaf mb-2">
+                    <Beaker className="size-4 sm:size-5" />
                     Recommended Dosage
                   </div>
-                  <p className="text-foreground/90 font-medium">
+                  <p className="text-sm sm:text-base text-foreground/90 font-medium">
                     {product.dosage}
                   </p>
                 </div>
@@ -202,33 +212,33 @@ export default function ProductDetailPage() {
 
         {/* Next / Previous Navigation */}
         {(prevProduct || nextProduct) && (
-          <div className="mt-8 pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mt-8 pt-8 grid grid-cols-2 gap-2 sm:gap-4">
             {prevProduct ? (
               <Link
                 to={`/products/${prevProduct.slug}`}
-                className="group flex items-center gap-4 p-4 pr-6 rounded-2xl hover:bg-secondary/50 transition-colors w-full sm:w-auto"
+                className="group flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-2xl hover:bg-secondary/50 transition-colors w-full"
               >
-                <div className="size-12 rounded-full bg-secondary border border-border grid place-items-center shrink-0 group-hover:border-leaf transition-colors">
-                  <ArrowLeft className="size-5 text-muted-foreground group-hover:text-leaf transition-colors" />
+                <div className="size-8 sm:size-12 rounded-full bg-secondary border border-border flex items-center justify-center shrink-0 group-hover:border-leaf transition-colors">
+                  <ArrowLeft className="size-3.5 sm:size-5 text-muted-foreground group-hover:text-leaf transition-colors" />
                 </div>
-                <div>
-                  <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Previous</div>
-                  <div className="font-display font-semibold text-foreground group-hover:text-leaf transition-colors">{prevProduct.name}</div>
+                <div className="min-w-0 w-full">
+                  <div className="text-[9px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5 sm:mb-1">Previous</div>
+                  <div className="font-display font-semibold text-xs sm:text-base text-foreground group-hover:text-leaf transition-colors truncate">{prevProduct.name}</div>
                 </div>
               </Link>
-            ) : <div className="hidden sm:block flex-1" />}
+            ) : <div className="hidden sm:block" />}
 
             {nextProduct && (
               <Link
                 to={`/products/${nextProduct.slug}`}
-                className="group flex items-center justify-end gap-4 p-4 pl-6 rounded-2xl hover:bg-secondary/50 transition-colors text-right w-full sm:w-auto ml-auto"
+                className="group flex flex-col sm:flex-row items-end sm:items-center justify-end gap-2 sm:gap-4 p-3 sm:p-4 rounded-2xl hover:bg-secondary/50 transition-colors text-right w-full sm:col-start-2"
               >
-                <div>
-                  <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Next</div>
-                  <div className="font-display font-semibold text-foreground group-hover:text-leaf transition-colors">{nextProduct.name}</div>
+                <div className="min-w-0 w-full sm:order-1 order-2 mt-0.5 sm:mt-0">
+                  <div className="text-[9px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5 sm:mb-1">Next</div>
+                  <div className="font-display font-semibold text-xs sm:text-base text-foreground group-hover:text-leaf transition-colors truncate">{nextProduct.name}</div>
                 </div>
-                <div className="size-12 rounded-full bg-secondary border border-border grid place-items-center shrink-0 group-hover:border-leaf transition-colors">
-                  <ArrowLeft className="size-5 rotate-180 text-muted-foreground group-hover:text-leaf transition-colors" />
+                <div className="size-8 sm:size-12 rounded-full bg-secondary border border-border flex items-center justify-center shrink-0 group-hover:border-leaf transition-colors sm:order-2 order-1">
+                  <ArrowLeft className="size-3.5 sm:size-5 rotate-180 text-muted-foreground group-hover:text-leaf transition-colors" />
                 </div>
               </Link>
             )}

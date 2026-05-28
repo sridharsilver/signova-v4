@@ -32,7 +32,7 @@ export default function TechnicalSpecsPage() {
 
   return (
     <div className="min-h-[100dvh] bg-gray-50 p-4 sm:p-6 flex flex-col justify-center items-center">
-      <div className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-gray-100">
+      <div className="w-full max-w-md mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100">
         <div className="flex justify-center mb-6">
           <img src={logo} alt="Signova Group" className="h-8 object-contain" />
         </div>
@@ -43,23 +43,23 @@ export default function TechnicalSpecsPage() {
           Technical Specifications
         </div>
 
-        <div className="space-y-1.5">
+        <div className="space-y-0.5">
           {paragraphs.map((para, index) => {
             if (para.includes(":") && !para.startsWith("(")) {
               const [title, ...rest] = para.split(":");
               return (
-                <div key={index} className="mt-5 mb-2 first:mt-0">
+                <div key={index} className="mt-4 mb-2 first:mt-0">
                   <h3 className="text-xs font-bold text-gray-900 mb-0.5">
                     {title.trim()}
                   </h3>
-                  <p className="text-xs text-gray-700 leading-relaxed">
+                  <p className="text-xs text-gray-700 leading-normal">
                     {rest.join(":").trim()}
                   </p>
                 </div>
               );
             }
             return (
-              <p key={index} className="text-xs text-gray-700 leading-relaxed">
+              <p key={index} className="text-xs text-gray-700 leading-normal">
                 {para}
               </p>
             );

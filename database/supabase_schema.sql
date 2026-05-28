@@ -32,8 +32,8 @@ CREATE TABLE public.sg4_products (
 CREATE TABLE public.sg4_product_technical_data (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   product_id UUID REFERENCES public.sg4_products(id) ON DELETE CASCADE UNIQUE NOT NULL,
-  composition JSONB, -- Store structured data like {"Zinc": "12.0", "pH": "5.5 - 6.5"}
-  heavy_metals JSONB, -- Store data like {"Lead": "0.003", "Cadmium": "0.0025"}
+  composition TEXT, -- Store simple comma-separated string
+  heavy_metals TEXT, -- Store simple comma-separated string
   crops_suitable TEXT,
   recommended_dose TEXT,
   raw_qr_text TEXT, -- Fallback for the raw formatted string if needed

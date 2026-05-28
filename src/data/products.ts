@@ -59,10 +59,10 @@ export const productsList: Product[] = [
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -82,12 +82,12 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Zinc Gluconate Zn- 12% (Liquid)
 
 Composition: 
-(i) Zinc (as Zn), percent by weight (Minimum) - 12.0
-(ii) pH (1% solution) - 5.5 - 6.5
-(iii) Specific Gravity - 1.28 - 1.45
-(iv) Lead (as Pb), percent by weight (Minimum) - 0.003
-(v) Cadmium (as Cd), percent by weight (Minimum) - 0.0025
-(vi) Arsenic (as As), percent by weight (Minimum) - 0.01
+1. Zinc (as Zn), percent by weight (Minimum) - 12.0
+2. pH (1% solution) - 5.5 - 6.5
+3. Specific Gravity - 1.28 - 1.45
+4. Lead (as Pb), percent by weight (Minimum) - 0.003
+5. Cadmium (as Cd), percent by weight (Minimum) - 0.0025
+6. Arsenic (as As), percent by weight (Minimum) - 0.01
 
 Crops: Suitable for all crops
 
@@ -105,10 +105,10 @@ Dose: Apply 250-500 ml per acre after dilution at 2-4 ml per litre of water.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -126,10 +126,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -147,10 +147,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -168,10 +168,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -191,10 +191,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -212,10 +212,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -233,10 +233,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -254,10 +254,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -275,10 +275,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -296,10 +296,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
@@ -317,10 +317,10 @@ Dose: Follow recommended dosage instructions provided on the package.`,
     qrData: `Title: Product Technical Specifications
 
 Composition: 
-(i) Active Ingredients (Minimum) - Standard
-(ii) pH (1% solution) - Optimal Range
-(iii) Specific Gravity - Standard
-(iv) Heavy Metals - Within Permissible Limits
+1. Active Ingredients (Minimum) - Standard
+2. pH (1% solution) - Optimal Range
+3. Specific Gravity - Standard
+4. Heavy Metals - Within Permissible Limits
 
 Crops: Suitable for target crops as per label
 
