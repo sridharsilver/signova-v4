@@ -1,8 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { ArrowLeft, Atom, Beaker, Package, Leaf, QrCode, Download, Home, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Atom, Beaker, Package, Leaf, QrCode, Download, Home, ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { usePageMeta } from "@/hooks/use-page-meta";
-import { productsList, productCategories } from "@/data/products";
+import { fetchProducts, fetchProductCategories, getProductImageUrl, Product, ProductCategory } from "@/data/products";
+import { useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -27,23 +28,49 @@ export default function ProductDetailPage() {
   // MOCK AUTH: In the future, this will check if the user is an admin
   const isAdmin = true;
 
+  const [productsList, setProductsList] = useState<Product[]>([]);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  useEffect(() => {
+    async function loadData() {
+      setIsLoading(true);
+      const [products, categories] = await Promise.all([
+        fetchProducts(),
+        fetchProductCategories()
+      ]);
+      setProductsList(products);
+      setProductCategories(categories);
+      setIsLoading(false);
+    }
+    loadData();
+  }, []);
+
   const product = productsList.find((p) => p.slug === slug);
   const currentIndex = productsList.findIndex((p) => p.slug === slug);
   const prevProduct = currentIndex > 0 ? productsList[currentIndex - 1] : null;
-  const nextProduct = currentIndex < productsList.length - 1 ? productsList[currentIndex + 1] : null;
+  const nextProduct = currentIndex < productsList.length - 1 && currentIndex !== -1 ? productsList[currentIndex + 1] : null;
   
-  const category = productCategories.find(c => c.id === product?.cat);
+  const category = productCategories.find(c => c.slug === product?.category_slug);
 
   usePageMeta({
     title: product
       ? `${product.name} — Signova Group`
       : "Product Not Found — Signova Group",
-    description: product ? product.desc : "The requested product was not found.",
+    description: product ? product.description : "The requested product was not found.",
   });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[60vh] grid place-items-center px-6 text-center">
+        <div className="text-xl font-semibold">Loading product...</div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -92,7 +119,7 @@ export default function ProductDetailPage() {
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link
-                      to={`/products?category=${category.id}`}
+                      to={`/products?category=${category.slug}`}
                       className="truncate max-w-[80px] sm:max-w-none inline-block align-bottom hover:text-foreground transition-colors"
                       title={category.name}
                     >
@@ -140,12 +167,12 @@ export default function ProductDetailPage() {
             <div className="absolute inset-0 bg-lime-gradient opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none mix-blend-multiply" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 sm:size-64 lg:size-72 bg-lime-gradient/20 blur-[80px] sm:blur-[100px] rounded-full" />
             
-            {product.image ? (
+            {product.image_url ? (
               <motion.img
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: "spring", bounce: 0.4 }}
-                src={product.image}
+                src={getProductImageUrl(product.image_url)}
                 alt={product.name}
                 className="absolute inset-0 w-full h-full object-contain p-4 sm:p-8 z-10 group-hover:scale-105 transition-transform duration-700"
               />
@@ -179,7 +206,7 @@ export default function ProductDetailPage() {
             </h1>
             
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
-              {product.desc}
+              {product.description}
             </p>
 
             {/* Product Details - Fixed to bottom */}
@@ -226,200 +253,24 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
               )}
+
+              {product.qr_data && (
+                <div className="pt-4 mt-6 border-t border-border/50">
+                  <Link 
+                    to={`/tech-specs/${product.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl bg-lime-gradient text-charcoal shadow-sm hover:scale-105 transition-transform"
+                  >
+                    <FileText className="size-4" />
+                    View Technical Specifications
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
         </div>
 
-        {/* Admin QR Feature */}
-        {isAdmin && (
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            
-            {/* Product Page QR */}
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full bg-secondary border border-border text-foreground hover:bg-secondary/80 hover:border-leaf transition-all shadow-sm group">
-                  <QrCode className="size-4 text-muted-foreground group-hover:text-leaf transition-colors" />
-                  Generate Product QR (Admin)
-                </button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-md flex flex-col items-center justify-center p-8">
-                <DialogHeader>
-                  <DialogTitle className="text-center mb-4">Product Page QR</DialogTitle>
-                </DialogHeader>
-                <div className="bg-white p-4 rounded-2xl shadow-inner my-8">
-                  <QRCodeSVG 
-                    id="qr-svg-product"
-                    value={`${window.location.origin}/products/${product.slug}`} 
-                    size={200} 
-                  />
-                </div>
-                <p className="text-sm text-muted-foreground text-center leading-relaxed mb-4">
-                  This QR code links directly to this product detail page.
-                </p>
-                
-                <div className="w-full bg-secondary/50 rounded-xl p-3 mb-6 flex items-center justify-between border border-border/50">
-                  <span className="text-xs text-muted-foreground truncate mr-3 select-all font-mono">
-                    {window.location.origin}/products/{product.slug}
-                  </span>
-                  <Link 
-                    to={`/products/${product.slug}`} 
-                    target="_blank"
-                    className="text-xs font-bold text-leaf hover:underline whitespace-nowrap"
-                  >
-                    Open
-                  </Link>
-                </div>
-                
-                <div className="flex w-full gap-3">
-                  <button
-                    onClick={() => {
-                      const svg = document.getElementById("qr-svg-product");
-                      if (!svg) return;
-                      const serializer = new XMLSerializer();
-                      const source = serializer.serializeToString(svg);
-                      const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
-                      const a = document.createElement("a");
-                      a.href = url;
-                      a.download = `${product.slug}-page-qr.svg`;
-                      a.click();
-                    }}
-                    className="flex-1 flex justify-center items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl border border-border/50 bg-secondary/50 hover:bg-secondary transition-colors"
-                  >
-                    <Download className="size-4" /> SVG
-                  </button>
-                  <button
-                    onClick={() => {
-                      const svg = document.getElementById("qr-svg-product");
-                      if (!svg) return;
-                      const serializer = new XMLSerializer();
-                      const source = serializer.serializeToString(svg);
-                      const img = new Image();
-                      const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
-                      img.onload = () => {
-                        const canvas = document.createElement("canvas");
-                        canvas.width = 1000;
-                        canvas.height = 1000;
-                        const ctx = canvas.getContext("2d");
-                        if (!ctx) return;
-                        ctx.fillStyle = "white";
-                        ctx.fillRect(0, 0, 1000, 1000);
-                        // Draw image with a 75px white margin on all sides (850x850)
-                        ctx.drawImage(img, 75, 75, 850, 850);
-                        const pngUrl = canvas.toDataURL("image/png");
-                        const a = document.createElement("a");
-                        a.href = pngUrl;
-                        a.download = `${product.slug}-page-qr.png`;
-                        a.click();
-                      };
-                      img.src = url;
-                    }}
-                    className="flex-1 flex justify-center items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl bg-lime-gradient text-charcoal shadow-sm hover:scale-105 transition-transform"
-                  >
-                    <Download className="size-4" /> PNG
-                  </button>
-                </div>
-              </DialogContent>
-            </Dialog>
 
-            {/* Technical Specs QR */}
-            {product.qrData && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <button className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full bg-secondary border border-border text-foreground hover:bg-secondary/80 hover:border-leaf transition-all shadow-sm group">
-                    <QrCode className="size-4 text-muted-foreground group-hover:text-leaf transition-colors" />
-                    Generate Technical QR (Admin)
-                  </button>
-                </DialogTrigger>
-              <DialogContent className="sm:max-w-md flex flex-col items-center justify-center p-8 bg-card/60 backdrop-blur-xl border border-white/20 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.2)] overflow-hidden">
-                {/* Gloss & Glow Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/2 to-transparent pointer-events-none z-0 mix-blend-overlay" />
-                <div className="absolute -top-24 -right-24 size-48 rounded-full bg-lime-gradient opacity-20 blur-3xl pointer-events-none z-0" />
-                <div className="absolute -bottom-24 -left-24 size-48 rounded-full bg-lime-gradient opacity-10 blur-3xl pointer-events-none z-0" />
-                
-                <div className="relative z-10 w-full flex flex-col items-center">
-                  <DialogHeader>
-                    <DialogTitle className="text-center mb-4">Technical Specifications QR</DialogTitle>
-                  </DialogHeader>
-                  <div className="bg-white p-4 rounded-2xl shadow-inner my-8 relative group">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
-                    <QRCodeSVG 
-                      id="qr-svg"
-                      value={`${window.location.origin}/tech-specs/${product.slug}`} 
-                      size={200} 
-                    />
-                  </div>
-                  <p className="text-sm text-muted-foreground text-center leading-relaxed mb-4">
-                    This QR code links directly to the dedicated Technical Specifications page.
-                  </p>
-                  
-                  <div className="w-full bg-secondary/50 backdrop-blur-sm rounded-xl p-3 mb-6 flex items-center justify-between border border-border/50 shadow-sm">
-                    <span className="text-xs text-muted-foreground truncate mr-3 select-all font-mono">
-                      {window.location.origin}/tech-specs/{product.slug}
-                    </span>
-                    <Link 
-                      to={`/tech-specs/${product.slug}`} 
-                      target="_blank"
-                      className="text-xs font-bold text-leaf hover:underline whitespace-nowrap"
-                    >
-                      Open
-                    </Link>
-                  </div>
-                </div>
-                
-                <div className="flex w-full gap-3">
-                  <button
-                    onClick={() => {
-                      const svg = document.getElementById("qr-svg");
-                      if (!svg) return;
-                      const serializer = new XMLSerializer();
-                      const source = serializer.serializeToString(svg);
-                      const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
-                      const a = document.createElement("a");
-                      a.href = url;
-                      a.download = `${product.slug}-qr.svg`;
-                      a.click();
-                    }}
-                    className="flex-1 flex justify-center items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl border border-border/50 bg-secondary/50 hover:bg-secondary transition-colors"
-                  >
-                    <Download className="size-4" /> SVG
-                  </button>
-                  <button
-                    onClick={() => {
-                      const svg = document.getElementById("qr-svg");
-                      if (!svg) return;
-                      const serializer = new XMLSerializer();
-                      const source = serializer.serializeToString(svg);
-                      const img = new Image();
-                      const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
-                      img.onload = () => {
-                        const canvas = document.createElement("canvas");
-                        canvas.width = 1000;
-                        canvas.height = 1000;
-                        const ctx = canvas.getContext("2d");
-                        if (!ctx) return;
-                        ctx.fillStyle = "white";
-                        ctx.fillRect(0, 0, 1000, 1000);
-                        // Draw image with a 75px white margin on all sides (850x850)
-                        ctx.drawImage(img, 75, 75, 850, 850);
-                        const pngUrl = canvas.toDataURL("image/png");
-                        const a = document.createElement("a");
-                        a.href = pngUrl;
-                        a.download = `${product.slug}-qr.png`;
-                        a.click();
-                      };
-                      img.src = url;
-                    }}
-                    className="flex-1 flex justify-center items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl bg-lime-gradient text-charcoal shadow-sm hover:scale-105 transition-transform"
-                  >
-                    <Download className="size-4" /> PNG
-                  </button>
-                </div>
-              </DialogContent>
-              </Dialog>
-            )}
-          </div>
-        )}
       </div>
       </div>
     </div>

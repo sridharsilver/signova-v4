@@ -5,7 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { PageHero } from "@/components/common/PageShell";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import heroProducts from "@/assets/images/heros/hero_products.png";
-import { productsList, productCategories } from "@/data/products";
+import { fetchProducts, fetchProductCategories, getIcon, getProductImageUrl, Product, ProductCategory } from "@/data/products";
 
 export default function ProductsPage() {
   usePageMeta({
@@ -23,6 +23,24 @@ export default function ProductsPage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const [productsList, setProductsList] = useState<Product[]>([]);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      setIsLoading(true);
+      const [products, categories] = await Promise.all([
+        fetchProducts(),
+        fetchProductCategories()
+      ]);
+      setProductsList(products);
+      setProductCategories(categories);
+      setIsLoading(false);
+    }
+    loadData();
+  }, []);
 
   // Reset to first page when searching
   useEffect(() => {
@@ -69,12 +87,13 @@ export default function ProductsPage() {
   const filteredProducts = useMemo(() => {
     return productsList.filter(
       (item) =>
-        (activeCategory === "all" || item.cat === activeCategory) &&
+        item.is_active !== false &&
+        (activeCategory === "all" || item.category_slug === activeCategory) &&
         (query === "" ||
           item.name.toLowerCase().includes(query.toLowerCase()) ||
-          item.desc.toLowerCase().includes(query.toLowerCase())),
+          item.description.toLowerCase().includes(query.toLowerCase())),
     );
-  }, [activeCategory, query]);
+  }, [activeCategory, query, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const paginatedProducts = filteredProducts.slice(
@@ -134,20 +153,23 @@ export default function ProductsPage() {
               onScroll={checkScroll}
               className="flex overflow-x-auto md:flex-wrap gap-2 md:gap-3 pb-2 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
-              {productCategories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`inline-flex shrink-0 items-center whitespace-nowrap gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition ${
-                    activeCategory === category.id
-                      ? "bg-primary text-primary-foreground shadow-card"
-                      : "bg-card border border-border hover:border-leaf text-card-foreground"
-                  }`}
-                >
-                  <category.icon className="size-4" />
-                  {category.name}
-                </button>
-              ))}
+              {productCategories.map((category) => {
+                const Icon = getIcon(category.icon);
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.slug)}
+                    className={`inline-flex shrink-0 items-center whitespace-nowrap gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition ${
+                      activeCategory === category.slug
+                        ? "bg-primary text-primary-foreground shadow-card"
+                        : "bg-card border border-border hover:border-leaf text-card-foreground"
+                    }`}
+                  >
+                    <Icon className="size-4" />
+                    {category.name}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -173,10 +195,10 @@ export default function ProductsPage() {
                         {product.tag}
                       </div>
                     )}
-                    {product.image ? (
+                    {product.image_url ? (
                       <div className="relative aspect-square md:aspect-[4/5] mb-5 rounded-2xl bg-gradient-to-br from-secondary to-background overflow-hidden">
                         <img
-                          src={product.image}
+                          src={getProductImageUrl(product.image_url)}
                           alt={product.name}
                           className="absolute inset-0 w-full h-full object-contain p-2 md:p-4 group-hover:scale-110 transition-transform duration-500"
                         />
@@ -190,7 +212,7 @@ export default function ProductsPage() {
                       {product.name}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                      {product.desc}
+                      {product.description}
                     </p>
                   </Link>
                 </motion.div>
