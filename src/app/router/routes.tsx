@@ -4,6 +4,7 @@ import AdminLayout from "@/app/layouts/AdminLayout";
 import HomePage from "@/pages/home";
 import AboutPage from "@/pages/about";
 import ProductsPage from "@/pages/products/products";
+import ProductsQrPage from "@/pages/products/qr";
 import ProductDetailPage from "@/pages/products/product-detail";
 import TechnicalSpecsPage from "@/pages/products/technical-specs";
 import KnowledgePage from "@/pages/knowledge/knowledge";
@@ -39,6 +40,7 @@ export const routes: RouteObject[] = [
       { path: "about", element: <AboutPage /> },
       { path: "infrastructure", element: <InfrastructurePage /> },
       { path: "products", element: <ProductsPage /> },
+      { path: "products/qr", element: <ProductsQrPage /> },
       { path: "products/:slug", element: <ProductDetailPage /> },
       { path: "knowledge", element: <KnowledgePage /> },
       { path: "knowledge/:slug", element: <KnowledgeDetailsPage /> },

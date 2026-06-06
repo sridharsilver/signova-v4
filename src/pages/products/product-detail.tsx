@@ -253,18 +253,6 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
               )}
-
-              {product.qr_data && (
-                <div className="pt-4 mt-6 border-t border-border/50">
-                  <Link 
-                    to={`/tech-specs/${product.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl bg-lime-gradient text-charcoal shadow-sm hover:scale-105 transition-transform"
-                  >
-                    <FileText className="size-4" />
-                    View Technical Specifications
-                  </Link>
-                </div>
-              )}
             </div>
           </div>
         </div>
