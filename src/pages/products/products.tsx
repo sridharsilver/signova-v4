@@ -18,7 +18,7 @@ export default function ProductsPage() {
   const activeCategory = searchParams.get("category") || "all";
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -272,16 +272,7 @@ export default function ProductsPage() {
               </button>
             </div>
           )}
-          <div className="mt-16 flex justify-center pb-8">
-            <a
-              href="/signova-products-template.csv"
-              download
-              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-leaf hover:underline transition-colors"
-            >
-              <Download className="size-3" />
-              Download Bulk Upload CSV Template
-            </a>
-          </div>
+
         </div>
       </section>
     </>
