@@ -71,10 +71,9 @@ export default function TechnicalSpecsPage() {
           {hasNewData ? (
             <>
               {product.tech_title && (
-                <div className="mb-4">
-                  <h2 className="text-lg font-bold text-gray-900 mb-1 leading-tight">
-                    {product.tech_title}
-                  </h2>
+                <div>
+                  <h3 className="text-base font-bold text-gray-900 mb-1">Technical Title</h3>
+                  <p className="text-sm text-gray-700 leading-normal">{product.tech_title}</p>
                 </div>
               )}
               {product.tech_composition && (
