@@ -79,7 +79,7 @@ export default function TechnicalSpecsPage() {
               {product.tech_composition && (
                 <div>
                   <h3 className="text-base font-bold text-gray-900 mb-1">Composition</h3>
-                  <ol className="text-sm text-gray-700 leading-normal list-[lower-roman] list-outside space-y-2 ml-5">
+                  <ol className="text-sm text-gray-700 leading-normal list-decimal list-outside space-y-2 ml-5">
                     {product.tech_composition.split('\n').filter(Boolean).map((line, i) => (
                       <li key={i} className="pl-2">{line}</li>
                     ))}
