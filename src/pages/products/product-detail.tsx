@@ -61,7 +61,7 @@ export default function ProductDetailPage() {
     title: product
       ? `${product.name} — Signova Group`
       : "Product Not Found — Signova Group",
-    description: product ? product.description : "The requested product was not found.",
+    description: product ? (product.uses || product.description) : "The requested product was not found.",
   });
 
   if (isLoading) {
