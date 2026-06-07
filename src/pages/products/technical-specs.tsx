@@ -64,12 +64,19 @@ export default function TechnicalSpecsPage() {
           {product.name}
         </h1>
         <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-6 pb-2 border-b border-gray-200 text-center">
-          {product.tech_title || "Technical Specifications"}
+          Technical Specifications
         </div>
 
         <div className="space-y-4 font-sans">
           {hasNewData ? (
             <>
+              {product.tech_title && (
+                <div className="mb-4">
+                  <h2 className="text-lg font-bold text-gray-900 mb-1 leading-tight">
+                    {product.tech_title}
+                  </h2>
+                </div>
+              )}
               {product.tech_composition && (
                 <div>
                   <h3 className="text-base font-bold text-gray-900 mb-1">Composition</h3>
